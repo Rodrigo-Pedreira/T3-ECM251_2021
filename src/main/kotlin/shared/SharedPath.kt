@@ -1,8 +1,7 @@
 package shared;
 
-public class SharedPath {
+class SharedPath {
     companion object{
-        //TODO: ADD DB
-        val STRING_CONNECTION_JDBC = ""
+        const val STRING_CONNECTION_JDBC = "jdbc:sqlite:bancot3t4.db"
     }
 }
