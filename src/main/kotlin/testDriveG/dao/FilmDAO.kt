@@ -7,7 +7,7 @@ class FilmDAO : GenericDAO {
 
     //Funcionou  -  Precisa Melhorar !!
     //Função para pegaar um filme com base no seu id.
-    //Function to get one film from the table by id.
+    //Function to get one film from table by id.
     override fun getOne(id : Int): Any {
         val connectionDAO = ConnectionDAO()
         var film : Films? = null        //isso aqui está ruim
@@ -32,7 +32,7 @@ class FilmDAO : GenericDAO {
 
     //Funcionou  -  Precisa Melhorar !!
     //Função para pegar um filme da tabela pelo nome.
-    //Function to get one film from the table by the name.
+    //Function to get one film from table by the name.
     fun getOne(name : String): Any {
         val connectionDAO = ConnectionDAO()
         var film : Films? = null        // Isso aqui está ruim
@@ -113,11 +113,37 @@ class FilmDAO : GenericDAO {
         }
     }
 
-    //fun addAll(): Any {}      para filme precisa mesmo?
+    //Funcionando
+    //Função que permite adicinar todos os filmes em uma lista.
+    //Function to add all films in list to table.
+    override fun addAll(list : List<Any>){
+        val connectionDAO = ConnectionDAO()
+        try{
+            val preparedStatement = connectionDAO.getPreparedStatement("""
+                INSERT INTO Films
+                (name, genre, director, date)
+                VALUES (?, ?, ?, ?)
+            """.trimIndent())
+            for (obj in list){
+                val film = obj as Films
+                preparedStatement?.setString(1,obj.name)
+                preparedStatement?.setString(2,obj.genre)
+                preparedStatement?.setString(3,obj.director)
+                preparedStatement?.setString(4,obj.date)
+                preparedStatement?.executeUpdate()
+            }
+        }
+        catch(exception:Exception){
+            exception.stackTrace
+        }
+        finally{
+            connectionDAO.close()
+        }
+    }
 
     //Funciona
     //Função permite deletar um filme da tabela pelo seu id.
-    //Function to delete one film from the table by the id.
+    //Function to delete one film from table by the id.
     override fun delete(id : Int){
         val connectionDAO = ConnectionDAO()
         try {
@@ -139,7 +165,7 @@ class FilmDAO : GenericDAO {
 
     //Funciona
     //Função permite atualizar um filme da tabela.
-    //Function to update one film from the table.
+    //Function to update one film from table.
     override fun update(obj : Any){
         val connectionDAO = ConnectionDAO()
         try {

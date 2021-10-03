@@ -17,8 +17,16 @@ class SistemaG {
 
         //filmDAO.delete(4)
 
-        filmDAO.update(Films(3,"etisaraP","thriller","Bong Joon-ho","11/07/2019"))
-
+        //filmDAO.update(Films(3,"Parasite","thriller","Bong Joon-ho","11/07/2019"))
+/*
+        filmDAO.addAll(
+            listOf<Films>(
+            Films(0,"Grown Ups 2","comedy","Dennis Dugan","08/16/2013"),
+            Films(0,"The Fast and the Furious","action","Rob Cohen","09/28/2001")
+            )
+        )
+*/
+        //filmDAO.addOne(Films(0,"Grown Ups 2","comedy","Dennis Dugan","08/16/2013"))
         var films = filmDAO.getAll()
         for (film in films){
             println(film)
