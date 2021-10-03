@@ -55,6 +55,9 @@ class FilmDAO : GenericDAO {
         return film!!
     }
 
+    //Parece Funcionar
+    //Função para pegar toda a tabela 'Films'.
+    //Function to get all elements from Films table.
     override fun getAll(): List<Any> {
         val connectionDAO = ConnectionDAO()
         val films = mutableListOf<Films>()
