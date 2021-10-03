@@ -2,17 +2,20 @@ package testDriveG
 
 import models.Films
 import models.Review
+import models.User
 import testDriveG.dao.FilmDAO
 import testDriveG.dao.ReviewDAO
+import testDriveG.dao.UserDAO
 
 class SistemaG {
     //init?
     fun run(){
-        val reviewDAO = ReviewDAO()
+        val userDAO = UserDAO()
 
-        reviewDAO.update(Review(5,3,1,"Homem De Ferro S2",25,4.3,"10/3/2021"))
+        userDAO.delete(4)
+        //User(0,"Stella","C0$7el@uhul","Co.Stella@hotmail.com")
+        //User(0,"MaMe","dbc87VU43207","maismenos@hotmail.com")
 
-        //filmDAO.delete(4)
 
         //filmDAO.update(Films(3,"Parasite","thriller","Bong Joon-ho","11/07/2019"))
         //filmDAO.addOne(Films(0,"Grown Ups 2","comedy","Dennis Dugan","08/16/2013"))
@@ -24,9 +27,9 @@ class SistemaG {
             )
         )
 */
-        val reviews = reviewDAO.getAll()
-        for (review in reviews){
-            println(review)
+        val users = userDAO.getAll()
+        for (user in users){
+            println(user)
         }
     }
 }
