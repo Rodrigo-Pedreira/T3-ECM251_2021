@@ -89,29 +89,81 @@ class FilmDAO : GenericDAO {
     //Function to add film in table.
     override fun addOne(obj : Any){
         val connectionDAO = ConnectionDAO()
-        val preparedStatement = connectionDAO.getPreparedStatement("""
+        try {
+            val preparedStatement = connectionDAO.getPreparedStatement(
+                """
             INSERT INTO Films
             (name, genre, director, date)
             VALUES (?, ?, ?, ?)
-        """.trimIndent())
-        val film = obj as Films
-        preparedStatement?.setString(1,film.name)
-        preparedStatement?.setString(2,film.genre)
-        preparedStatement?.setString(3,film.director)
-        preparedStatement?.setString(4,film.date)
-        preparedStatement?.executeUpdate()
-        //connectionDAO.commit()
-        connectionDAO.close()
+        """.trimIndent()
+            )
+            val film = obj as Films
+            preparedStatement?.setString(1, film.name)
+            preparedStatement?.setString(2, film.genre)
+            preparedStatement?.setString(3, film.director)
+            preparedStatement?.setString(4, film.date)
+            preparedStatement?.executeUpdate()
+            //connectionDAO.commit()
+        }
+        catch(exception:Exception){
+            exception.stackTrace
+        }
+        finally{
+            connectionDAO.close()
+        }
     }
 
-    //fun addAll(): Any {}      Precisa mesmo?
+    //fun addAll(): Any {}      para filme precisa mesmo?
 
-    override fun delete(id : Int): Any {
-        TODO("Not yet implemented")
+    //Funciona
+    //Função permite deletar um filme da tabela pelo seu id.
+    //Function to delete one film from the table by the id.
+    override fun delete(id : Int){
+        val connectionDAO = ConnectionDAO()
+        try {
+            val preparedStatement = connectionDAO.getPreparedStatement("""
+                DELETE FROM Films
+                WHERE id = ?;
+                """.trimIndent()
+            )
+            preparedStatement?.setInt(1, id)
+            preparedStatement?.executeUpdate()
+        }
+        catch(exception:Exception){
+            exception.stackTrace
+        }
+        finally{
+            connectionDAO.close()
+        }
     }
 
-    override fun update(): Any {
-        TODO("Not yet implemented")
+    //Funciona
+    //Função permite atualizar um filme da tabela.
+    //Function to update one film from the table.
+    override fun update(obj : Any){
+        val connectionDAO = ConnectionDAO()
+        try {
+            val preparedStatement = connectionDAO.getPreparedStatement(
+                """
+            UPDATE Films
+            SET name = ?, genre = ?, director = ?, date = ?
+            WHERE id = ?;
+        """.trimIndent()
+            )
+            val film = obj as Films
+            preparedStatement?.setString(1, film.name)
+            preparedStatement?.setString(2, film.genre)
+            preparedStatement?.setString(3, film.director)
+            preparedStatement?.setString(4, film.date)
+            preparedStatement?.setInt(5, film.id)
+            preparedStatement?.executeUpdate()
+        }
+        catch(exception:Exception){
+            exception.stackTrace
+        }
+        finally{
+            connectionDAO.close()
+        }
     }
 
 }
