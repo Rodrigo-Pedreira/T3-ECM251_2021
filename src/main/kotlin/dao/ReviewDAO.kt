@@ -1,7 +1,7 @@
 package dao
 
 import models.Review
-
+//TODO:JavaDocs
 class ReviewDAO {
     companion object : GenericDAOInterface {
         /* override fun pegarUm(id: Int): Any {
@@ -29,7 +29,7 @@ class ReviewDAO {
       } */
 
         override fun select(id: Int): Review {
-            var reviews: Review? = null
+            val reviews: Review?
             var connection: ConnectionDAO? = null
             try {
                 connection = ConnectionDAO()
@@ -218,7 +218,30 @@ class ReviewDAO {
       } */
 
         override fun update(obj: Any) {
-            TODO("Not yet implemented")
+            var connection: ConnectionDAO? = null
+            try {
+                connection = ConnectionDAO()
+                val preparedStatement = connection.getPreparedStatement(
+                    """
+                    UPDATE reviews
+                    SET idUser =?, idFilm =?, review =?  ,  likes =?, score =?, data =?
+                    WHERE id =?;
+                    """.trimMargin()
+                )
+                val review = obj as  Review
+                    preparedStatement?.setInt(1, review.idUser)
+                    preparedStatement?.setInt(2, review.idFilm)
+                    preparedStatement?.setString(3, review.review)
+                    preparedStatement?.setInt(4, review.likes)
+                    preparedStatement?.setDouble(5, review.score)
+                    preparedStatement?.setString(6, review.data)
+                    preparedStatement?.setInt(7, review.id)
+                    preparedStatement?.executeUpdate()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            } finally {
+                connection?.close()
+            }
         }
 
         /* override fun deletar(id: Int) {
@@ -235,7 +258,22 @@ class ReviewDAO {
       } */
 
         override fun delete(id: Int) {
-            TODO("Not yet implemented")
+            var connection: ConnectionDAO? = null
+            try {
+                connection = ConnectionDAO()
+                val preparedStatement = connection.getPreparedStatement(
+                    """
+                    DELETE FROM reviews
+                    WHERE id =?;
+                    """.trimMargin()
+                )
+                preparedStatement?.setInt(1, id)
+                preparedStatement?.executeUpdate()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            } finally {
+                connection?.close()
+            }
         }
     }
 }
