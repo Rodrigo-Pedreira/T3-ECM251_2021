@@ -5,5 +5,5 @@ data class Films(
     val name : String,
     val genre : String,
     val director : String,
-    val date : String,
+    val date : String
 )

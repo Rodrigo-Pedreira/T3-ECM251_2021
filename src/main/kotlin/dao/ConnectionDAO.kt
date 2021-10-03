@@ -33,4 +33,9 @@ public class ConnectionDAO {
         this.preparedStatement = this.connection ?.prepareStatement(sqlString)
         return this.preparedStatement
     }
+
+    //Se não estiver/ter auto-commit, usar esta função.
+    fun commit(){
+        this.connection?.commit()
+    }
 }

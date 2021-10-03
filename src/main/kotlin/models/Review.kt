@@ -8,5 +8,5 @@ data class Review (
     val review : String,
     val likes : Int,
     val score : Double,
-    val data : String,
+    val data : String
 )
