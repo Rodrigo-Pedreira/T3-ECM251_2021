@@ -3,8 +3,8 @@ package testdrivers
 import dao.ReviewDAO
 import models.Review
 //TODO: JavaDocs
-class ReviewsDAOTestDrive {
-    companion object : DAOTestDriveInterface {
+class ReviewDAOTestDrive {
+    companion object : TestDriveDAOInterface {
         override fun selectTest(id: Int) {
             println("SelectTest")
             val rev = ReviewDAO.select(id)
@@ -54,7 +54,7 @@ class ReviewsDAOTestDrive {
         }
 
         override fun testAll(select: Int, update: Int, delete: Int) {
-            super<DAOTestDriveInterface>.testAll(select, update, delete)
+            super<TestDriveDAOInterface>.testAll(select, update, delete)
         }
     }
 }
