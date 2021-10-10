@@ -20,7 +20,7 @@ class ReviewDAO : GenericDAO {
                 resultSet.getString("review"),
                 resultSet.getInt("likes"),
                 resultSet.getDouble("score"),
-                resultSet.getString("data")
+                resultSet.getString("date")
 
             )
         }
@@ -49,7 +49,7 @@ class ReviewDAO : GenericDAO {
                     resultSet.getString("review"),
                     resultSet.getInt("likes"),
                     resultSet.getDouble("score"),
-                    resultSet.getString("data"))
+                    resultSet.getString("date"))
                 )
             }
         }
@@ -70,7 +70,7 @@ class ReviewDAO : GenericDAO {
         try{
             val preparedStatement = connectionDAO.getPreparedStatement("""
                 INSERT INTO Reviews
-                (idUser, idFilm, review, likes, score, data)
+                (idUser, idFilm, review, likes, score, date)
                 VALUES (?,?,?,?,?,?)
             """.trimIndent())
             val review = obj as Review
@@ -79,7 +79,7 @@ class ReviewDAO : GenericDAO {
             preparedStatement?.setString(3,review.review)
             preparedStatement?.setInt(4,review.likes)
             preparedStatement?.setDouble(5,review.score)
-            preparedStatement?.setString(6,review.data)
+            preparedStatement?.setString(6,review.date)
             preparedStatement?.executeUpdate()
         }
         catch (exception:Exception){
@@ -98,7 +98,7 @@ class ReviewDAO : GenericDAO {
         try{
             val preparedStatement = connectionDAO.getPreparedStatement("""
                 INSERT INTO Reviews
-                (idUser, idFilm, review, likes, score, data)
+                (idUser, idFilm, review, likes, score, date)
                 VALUES (?,?,?,?,?,?)
             """.trimIndent())
             for (obj in list){
@@ -108,7 +108,7 @@ class ReviewDAO : GenericDAO {
                 preparedStatement?.setString(3,review.review)
                 preparedStatement?.setInt(4,review.likes)
                 preparedStatement?.setDouble(5,review.score)
-                preparedStatement?.setString(6,review.data)
+                preparedStatement?.setString(6,review.date)
                 preparedStatement?.executeUpdate()
             }
         }
@@ -150,7 +150,7 @@ class ReviewDAO : GenericDAO {
         try {
             val preparedStatement = connectionDAO.getPreparedStatement("""
                 UPDATE Reviews
-                SET idUser = ?, idFilm = ?, review = ?, likes = ?, score = ?, data = ?
+                SET idUser = ?, idFilm = ?, review = ?, likes = ?, score = ?, date = ?
                 WHERE id = ?;
             """.trimIndent())
             val review = obj as Review
@@ -159,7 +159,7 @@ class ReviewDAO : GenericDAO {
             preparedStatement?.setString(3,review.review)
             preparedStatement?.setInt(4,review.likes)
             preparedStatement?.setDouble(5,review.score)
-            preparedStatement?.setString(6,review.data)
+            preparedStatement?.setString(6,review.date)
             preparedStatement?.setInt(7,review.id)
             preparedStatement?.executeUpdate()
         }

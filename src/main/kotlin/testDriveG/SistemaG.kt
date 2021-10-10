@@ -10,10 +10,9 @@ import testDriveG.dao.UserDAO
 class SistemaG {
     //init?
     fun run(){
-        val userDAO = UserDAO()
+        val reviewDAO = ReviewDAO()
 
-        userDAO.delete(4)
-        //User(0,"Stella","C0$7el@uhul","Co.Stella@hotmail.com")
+
         //User(0,"MaMe","dbc87VU43207","maismenos@hotmail.com")
 
 
@@ -27,9 +26,9 @@ class SistemaG {
             )
         )
 */
-        val users = userDAO.getAll()
-        for (user in users){
-            println(user)
+        val reviews = reviewDAO.getAll()
+        for (review in reviews){
+            println(review)
         }
     }
 }
