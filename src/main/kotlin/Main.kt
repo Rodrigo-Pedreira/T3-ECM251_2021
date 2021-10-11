@@ -1,6 +1,6 @@
 import testDriveG.SistemaG
 
-fun main(args: Array<String>) {
+fun main() {
     val sistema = SistemaG()
     sistema.run()
 }
