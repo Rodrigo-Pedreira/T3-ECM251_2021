@@ -1,7 +1,6 @@
 package testDriveG.dao
 
 import dao.ConnectionDAO
-import models.Review
 import models.User
 
 class UserDAO : GenericDAO{
@@ -13,13 +12,14 @@ class UserDAO : GenericDAO{
         val connectionDAO = ConnectionDAO()
         var user : User? = null        //isso aqui está ruim
         try {
-            val resultSet = connectionDAO.executeQuery("SELECT * FROM Users WHERE id == ${id};")
-            user = User(
-                resultSet!!.getInt("id"),
-                resultSet.getString("name"),
-                resultSet.getString("password"),
-                resultSet.getString("email")
-            )
+            val resultSet = connectionDAO.executeQuery("SELECT * FROM Users WHERE id = ${id};")
+            while(resultSet?.next()!!){
+                user = User(
+                    resultSet.getInt("id"),
+                    resultSet.getString("name"),
+                    resultSet.getString("password"),
+                    resultSet.getString("email"))
+            }
         }
         catch(exception:Exception){
             exception.stackTrace
