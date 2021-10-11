@@ -5,21 +5,22 @@ import models.Films
 
 class FilmDAO : GenericDAO {
 
-    //Funcionou  -  Precisa Melhorar !!
+    //Funcionando  -  Precisa Melhorar !!
     //Função para pegaar um filme com base no seu id.
     //Function to get one film from table by id.
     override fun getOne(id : Int): Any {
         val connectionDAO = ConnectionDAO()
         var film : Films? = null        //isso aqui está ruim
         try {
-            val resultSet = connectionDAO.executeQuery("SELECT * FROM Films WHERE id == ${id};")
-            film = Films(
-                resultSet!!.getInt("id"),       //Esse "!!" me preocupa
-                resultSet.getString("name"),
-                resultSet.getString("genre"),
-                resultSet.getString("director"),
-                resultSet.getString("date")
-            )
+            val resultSet = connectionDAO.executeQuery("SELECT * FROM Films WHERE id = ${id};")
+            while(resultSet?.next()!!){
+                film = Films(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("genre"),
+                        resultSet.getString("director"),
+                        resultSet.getString("date"))
+            }
         }
         catch(exception:Exception){
             exception.stackTrace
@@ -30,21 +31,22 @@ class FilmDAO : GenericDAO {
         return film!!
     }
 
-    //Funcionou  -  Precisa Melhorar !!
+    //Funcionando  -  Precisa Melhorar !!
     //Função para pegar um filme da tabela pelo nome.
     //Function to get one film from table by the name.
     fun getOne(name : String): Any {
         val connectionDAO = ConnectionDAO()
         var film : Films? = null        // Isso aqui está ruim
         try {
-            val resultSet = connectionDAO.executeQuery("SELECT * FROM Films WHERE name == \"${name}\";")
-            film = Films(
-                resultSet!!.getInt("id"),           //O "!!" me preocupa
-                resultSet.getString("name"),
-                resultSet.getString("genre"),
-                resultSet.getString("director"),
-                resultSet.getString("date")
-            )
+            val resultSet = connectionDAO.executeQuery("SELECT * FROM Films WHERE name = '${name}';")
+            while(resultSet?.next()!!){
+                film = Films(
+                    resultSet.getInt("id"),
+                    resultSet.getString("name"),
+                    resultSet.getString("genre"),
+                    resultSet.getString("director"),
+                    resultSet.getString("date"))
+            }
         }
         catch(exception:Exception){
             exception.stackTrace
@@ -55,7 +57,7 @@ class FilmDAO : GenericDAO {
         return film!!
     }
 
-    //Parece Funcionar
+    //Funcionando
     //Função para pegar toda a tabela 'Films'.
     //Function to get all elements from Films table.
     override fun getAll(): List<Any> {
@@ -141,7 +143,7 @@ class FilmDAO : GenericDAO {
         }
     }
 
-    //Funciona
+    //Funcionando
     //Função permite deletar um filme da tabela pelo seu id.
     //Function to delete one film from table by the id.
     override fun delete(id : Int){
@@ -163,7 +165,7 @@ class FilmDAO : GenericDAO {
         }
     }
 
-    //Funciona
+    //Funcionando
     //Função permite atualizar um filme da tabela.
     //Function to update one film from table.
     override fun update(obj : Any){
