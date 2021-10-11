@@ -194,4 +194,27 @@ class FilmDAO : GenericDAO {
         }
     }
 
+    //Funcionando
+    //Função permite calcular nota média de um filme com base nos avaliações(reviews) dos usuários.
+    //Function to get the film score/grade based in users reviews.
+    fun score(id : Int) : Double{
+        val connectionDAO = ConnectionDAO()
+        var film : Films? = null        //isso aqui está ruim
+        var score : Double = 0.0
+        var n : Int = 0
+        try {
+            val resultSet = connectionDAO.executeQuery("SELECT score FROM Reviews WHERE idFilm = ${id};")
+            while(resultSet?.next()!!){
+                score += resultSet.getDouble("score")
+                n++
+            }
+        }
+        catch(exception:Exception){
+            exception.stackTrace
+        }
+        finally {
+            connectionDAO.close()
+        }
+        return score/n
+    }
 }
