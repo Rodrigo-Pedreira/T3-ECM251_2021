@@ -6,55 +6,74 @@ import models.Film
 class FilmDAOTestDrive {
     companion object : TestDriveDAOInterface {
         override fun selectTest(id: Int) {
-            println("SelectTest")
+            super<TestDriveDAOInterface>.selectTest(id)
             val film = FilmDAO.select(id)
             println(film)
-            println("--------------------")
+            printDash()
         }
 
         override fun selectAllTest() {
-            println("SelectAllTest")
+            super<TestDriveDAOInterface>.selectAllTest()
             val filmS = FilmDAO.selectAll()
             filmS.forEach { println(it) }
-            println("--------------------\n")
+            printDash()
         }
 
         override fun insertTest() {
-            println("InsertTest")
+            super<TestDriveDAOInterface>.insertTest()
             val t = Film(1111, "Insert", "Insert", "Insert", "0001/0001")
             FilmDAO.insert(t)
             println(t)
-            println("--------------------\n")
+            printDash()
         }
 
         override fun insertManyTest() {
-            println("InsertManyTest")
+            super<TestDriveDAOInterface>.insertManyTest()
             val t = Film(2111, "InsertMany", "InsertMany", "InsertMany", "0002/0002")
             val t2 = Film(3111, "InsertMany2", "InsertMany2", "InsertMany2", "0003/0003")
             val filmI = listOfNotNull<Film>(t, t2)
             filmI.forEach { println(it) }
             FilmDAO.insertMany(filmI)
-            println("--------------------\n")
+            printDash()
         }
 
         override fun updateTest(id: Int) {
-            println("********UpdateTeste")
+            super<TestDriveDAOInterface>.updateTest(id)
             val t = Film(id, "Update", "Update", "Update", "0004/0004")
-            selectTest(id)
             FilmDAO.update(t)
             selectTest(id)
-            println("********--------------------\n")
+            printStar()
         }
 
         override fun deleteTest(id: Int) {
-            println("********DeleteTest")
-            selectTest(id)
+            super<TestDriveDAOInterface>.deleteTest(id)
             FilmDAO.delete(id)
-            println("********--------------------\n")
+            printStar()
         }
 
         override fun testAll(select: Int, update: Int, delete: Int) {
             super<TestDriveDAOInterface>.testAll(select, update, delete)
+            selectFromStringTest()
+        }
+
+        override fun printDash() {
+            super<TestDriveDAOInterface>.printDash()
+        }
+
+        override fun printStar() {
+            super<TestDriveDAOInterface>.printStar()
+        }
+
+        fun selectFromStringTest(
+            name: String = "INSERTMANY",
+            genre: String = "",
+            director: String = "",
+            date: String = "",
+        ) {
+            println("selectFromStringTest: name: $name, genre: $genre, date: $date")
+            val t = FilmDAO.selectFromString(name, genre, director, date)
+            t.forEach { println(it) }
+            println("--------------------\n")
         }
     }
 }
