@@ -1,6 +1,6 @@
 package models;
 
-data class Films(
+data class Film(
     val id : Int,
     val name : String,
     val genre : String,
