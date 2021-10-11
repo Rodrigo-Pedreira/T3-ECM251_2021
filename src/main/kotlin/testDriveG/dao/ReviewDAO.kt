@@ -12,17 +12,18 @@ class ReviewDAO : GenericDAO {
         val connectionDAO = ConnectionDAO()
         var review : Review? = null        //isso aqui está ruim
         try {
-            val resultSet = connectionDAO.executeQuery("SELECT * FROM Reviews WHERE id == ${id};")
-            review = Review(
-                resultSet!!.getInt("id"),
-                resultSet.getInt("idUser"),
-                resultSet.getInt("idFilm"),
-                resultSet.getString("review"),
-                resultSet.getInt("likes"),
-                resultSet.getDouble("score"),
-                resultSet.getString("date")
-
-            )
+            val resultSet = connectionDAO.executeQuery("SELECT * FROM Reviews WHERE id = 1;")
+            while(resultSet?.next()!!){
+                review = Review(
+                    resultSet.getInt("id"),
+                    resultSet.getInt("idUser"),
+                    resultSet.getInt("idFilm"),
+                    resultSet.getString("review"),
+                    resultSet.getInt("likes"),
+                    resultSet.getDouble("score"),
+                    resultSet.getString("date")
+                )
+            }
         }
         catch(exception:Exception){
             exception.stackTrace
