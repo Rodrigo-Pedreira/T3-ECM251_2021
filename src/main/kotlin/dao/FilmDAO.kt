@@ -27,8 +27,13 @@ class FilmDAO {
             return film!!
         }
 
-        fun selectFromString(name: String = "", genre: String = "", director: String = "", date: String = ""): Film {
-            val film: Film?
+        fun selectFromString(
+            name: String = "",
+            genre: String = "",
+            director: String = "",
+            date: String = "",
+        ): List<Film> {
+            val films = mutableListOf<Film>()
             var connection: ConnectionDAO? = null
             try {
                 connection = ConnectionDAO()
@@ -40,20 +45,24 @@ class FilmDAO {
                             "AND   director LIKE '%${director}%'" +
                             "AND   date     LIKE '%${date}%';"
                 )
-                film = Film(
-                    resultSet!!.getInt("id"),
-                    resultSet.getString("name"),
-                    resultSet.getString("genre"),
-                    resultSet.getString("director"),
-                    resultSet.getString("date")
-                )
+                while (resultSet?.next()!!) {
+                    films.add(
+                        Film(
+                            resultSet.getInt("id"),
+                            resultSet.getString("name"),
+                            resultSet.getString("genre"),
+                            resultSet.getString("director"),
+                            resultSet.getString("date")
+                        )
+                    )
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
-                return Film(-1, "ERROR", "ERROR", "ERROR", "ERROR")
+                return listOfNotNull<Film>(Film(-1, "ERROR", "ERROR", "ERROR", "ERROR"))
             } finally {
                 connection?.close()
             }
-            return film!!
+            return films
         }
 
         override fun selectAll(): List<Film> {
