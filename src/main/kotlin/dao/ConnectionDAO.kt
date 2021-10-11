@@ -10,7 +10,7 @@ public class ConnectionDAO {
     var preparedStatement : PreparedStatement?
 
     init {
-        this.connection = DriverManager.getConnection(SharedPath.STRING_CONNECTION_JDBC)
+        this.connection = DriverManager.getConnection(SharedPath.STRING_CONNECTION_JDBC,SharedPath.DATABASE_USERNAME,SharedPath.DATABASE_PASSWORD)
         this.statement = null
         this.resultSet = null
         this.preparedStatement = null
