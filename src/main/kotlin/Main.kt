@@ -1,6 +1,7 @@
 import System.System
 
 fun main() {
-    val sistema = System()
-    sistema.run()
+    val system = System()
+    //system.runDAOtest()
+    system.runKtor()
 }

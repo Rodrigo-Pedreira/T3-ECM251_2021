@@ -1,10 +1,20 @@
 package System
 
 import dao.ReviewDAO
+import io.ktor.features.*
+import io.ktor.server.engine.*
+import io.ktor.server.netty.*
+
+import br.maua.routes.registerUserRoutes
+
+import io.ktor.application.*
+import io.ktor.features.*
+import io.ktor.serialization.*
+
 
 class System {
     //init?
-    fun run(){
+    fun runDAOtest(){
         val reviewDAO = ReviewDAO()
 
 
@@ -25,4 +35,17 @@ class System {
             println(review)
         }
     }
+
+    fun runKtor(){
+        embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
+            //configureRouting()
+
+            install(ContentNegotiation) {
+                json()
+            }
+
+            registerUserRoutes()
+        }.start(wait = true)
+    }
 }
+
