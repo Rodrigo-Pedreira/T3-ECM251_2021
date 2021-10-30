@@ -1,6 +1,5 @@
-package testDriveG.dao
+package dao
 
-import dao.ConnectionDAO
 import models.Films
 
 class FilmDAO : GenericDAO {

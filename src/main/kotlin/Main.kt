@@ -1,6 +1,6 @@
-import testDriveG.SistemaG
+import System.System
 
 fun main() {
-    val sistema = SistemaG()
+    val sistema = System()
     sistema.run()
 }

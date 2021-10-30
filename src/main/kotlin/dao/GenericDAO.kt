@@ -1,4 +1,4 @@
-package testDriveG.dao
+package dao
 
 interface GenericDAO {
     fun getOne(id : Int) : Any

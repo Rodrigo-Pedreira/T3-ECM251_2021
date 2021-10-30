@@ -1,15 +1,14 @@
-package testDriveG
+package System
 
-import models.Review
-import testDriveG.dao.ReviewDAO
+import dao.ReviewDAO
 
-class SistemaG {
+class System {
     //init?
     fun run(){
         val reviewDAO = ReviewDAO()
 
 
-        reviewDAO.delete(7)
+        //reviewDAO.delete(7)
 
         //filmDAO.update(Films(3,"Parasite","thriller","Bong Joon-ho","11/07/2019"))
         //filmDAO.addOne(Films(0,"Grown Ups 2","comedy","Dennis Dugan","08/16/2013"))

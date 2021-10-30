@@ -1,9 +1,8 @@
-package testDriveG.dao
+package dao
 
-import dao.ConnectionDAO
 import models.User
 
-class UserDAO : GenericDAO{
+class UserDAO : GenericDAO {
 
     //Funcionando
     //Função para pegar um user com base no seu id.
