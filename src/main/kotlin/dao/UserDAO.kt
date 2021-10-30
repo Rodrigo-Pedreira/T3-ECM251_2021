@@ -2,12 +2,12 @@ package dao
 
 import models.User
 
-class UserDAO : GenericDAO {
+class UserDAO {
 
     //Funcionando
     //Função para pegar um user com base no seu id.
     //Function to get one user from table by id.
-    override fun getOne(id: Int): Any {
+    fun getOne(id: Int): User? {
         val connectionDAO = ConnectionDAO()
         var user : User? = null        //isso aqui está ruim
         try {
@@ -26,13 +26,13 @@ class UserDAO : GenericDAO {
         finally {
             connectionDAO.close()
         }
-        return user!!
+        return user
     }
 
     //Funcionando
     //Função para pegar toda a tabela 'Users'.
     //Function to get all elements from Users table.
-    override fun getAll(): List<Any> {
+    fun getAll(): List<Any> {
         val connectionDAO = ConnectionDAO()
         val user = mutableListOf<User>()
         try{
@@ -58,7 +58,7 @@ class UserDAO : GenericDAO {
     //Funcionando
     //Função que permite adicionar um user na tabela.
     //Function to add user in table.
-    override fun addOne(obj: Any) {
+    fun addOne(obj: Any) {
         val connectionDAO = ConnectionDAO()
         try{
             val preparedStatement = connectionDAO.getPreparedStatement("""
@@ -83,7 +83,7 @@ class UserDAO : GenericDAO {
     //Funcionando
     //Função que permite adicinar todos os users em uma lista.
     //Function to add all users in list to table.
-    override fun addAll(list: List<Any>) {
+    fun addAll(list: List<Any>) {
         val connectionDAO = ConnectionDAO()
         try{
             val preparedStatement = connectionDAO.getPreparedStatement("""
@@ -110,7 +110,7 @@ class UserDAO : GenericDAO {
     //Funcionando
     //Função permite deletar um user da tabela pelo seu id.
     //Function to delete one user from table by the id.
-    override fun delete(id: Int) {
+    fun delete(id: Int) {
         val connectionDAO = ConnectionDAO()
         try {
             val preparedStatement = connectionDAO.getPreparedStatement("""
@@ -132,7 +132,7 @@ class UserDAO : GenericDAO {
     //Funcionando
     //Função permite atualizar um user da tabela.
     //Function to update one user from table.
-    override fun update(obj: Any) {
+    fun update(obj: Any) {
         val connectionDAO = ConnectionDAO()
         try {
             val preparedStatement = connectionDAO.getPreparedStatement("""
