@@ -38,14 +38,14 @@ fun Route.userRouting() {
         post ("/addone") {
 
             val parameters = call.receiveParameters()
-            val userName = parameters["userName"] ?: return@post call.respondText(
+            val name = parameters["name"] ?: return@post call.respondText(
                 "Missing user name.",status = HttpStatusCode.NoContent)
             val password = parameters["password"] ?: return@post call.respondText(
                 "Missing password.",status = HttpStatusCode.NoContent)
             val email = parameters["email"] ?: return@post call.respondText(
                 "Missing email.",status = HttpStatusCode.NoContent)
 
-            UserDAO().addOne(User(1,userName,password,email))
+            UserDAO().addOne(User(1,name,password,email))
 
             call.respondText(
                 "User stored correctly",
@@ -68,12 +68,12 @@ fun Route.userRouting() {
             } else {
 
                 val parameters = call.receiveParameters()
-                val userName = parameters["userName"] ?: user.name
+                val name = parameters["name"] ?: user.name
                 val password = parameters["password"] ?: user.password
                 val email = parameters["email"] ?: user.email
                 //ou
                 /*
-                val userName = parameters["userName"] ?: return@put call.respondText(
+                val name = parameters["name"] ?: return@put call.respondText(
                     "Missing user name.",status = HttpStatusCode.NoContent)
                 val password = parameters["password"] ?: return@put call.respondText(
                     "Missing password.",status = HttpStatusCode.NoContent)
@@ -81,7 +81,7 @@ fun Route.userRouting() {
                     "Missing email.",status = HttpStatusCode.NoContent)
                 */
 
-                val newUser = User(id,userName,password,email)
+                val newUser = User(id,name,password,email)
 
                 userDAO.update(newUser)
 
