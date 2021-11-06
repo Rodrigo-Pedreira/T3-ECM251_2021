@@ -2,16 +2,16 @@ package dao
 
 import models.Review
 
-class ReviewDAO : GenericDAO {
+class ReviewDAO {
 
     //Funcionando
     //Função para pegaar um review com base no seu id.
     //Function to get one review from table by id.
-    override fun getOne(id : Int): Any {
+    fun getOne(id : Int): Review? {
         val connectionDAO = ConnectionDAO()
         var review : Review? = null        //isso aqui está ruim
         try {
-            val resultSet = connectionDAO.executeQuery("SELECT * FROM Reviews WHERE id = 1;")
+            val resultSet = connectionDAO.executeQuery("SELECT * FROM Reviews WHERE id = ${id};")
             while(resultSet?.next()!!){
                 review = Review(
                     resultSet.getInt("id"),
@@ -36,7 +36,7 @@ class ReviewDAO : GenericDAO {
     //Funcionando
     //Função para pegar toda a tabela 'Reviews'.
     //Function to get all elements from Reviews table.
-    override fun getAll(): List<Any> {
+    fun getAll(): List<Any> {
         val connectionDAO = ConnectionDAO()
         val review = mutableListOf<Review>()
         try{
@@ -65,7 +65,7 @@ class ReviewDAO : GenericDAO {
     //Funcionando
     //Função que permite adicionar um review na tabela.
     //Function to add review in table.
-    override fun addOne(obj : Any){
+    fun addOne(obj : Any){
         val connectionDAO = ConnectionDAO()
         try{
             val preparedStatement = connectionDAO.getPreparedStatement("""
@@ -93,7 +93,7 @@ class ReviewDAO : GenericDAO {
     //Funcionando
     //Função que permite adicinar todos os reviews em uma lista.
     //Function to add all reviews in list to table.
-    override fun addAll(list : List<Any>){
+    fun addAll(list : List<Any>){
         val connectionDAO = ConnectionDAO()
         try{
             val preparedStatement = connectionDAO.getPreparedStatement("""
@@ -123,7 +123,7 @@ class ReviewDAO : GenericDAO {
     //Funcionando
     //Função permite deletar um review da tabela pelo seu id.
     //Function to delete one review from table by the id.
-    override fun delete(id : Int){
+    fun delete(id : Int){
         val connectionDAO = ConnectionDAO()
         try {
             val preparedStatement = connectionDAO.getPreparedStatement("""
@@ -145,7 +145,7 @@ class ReviewDAO : GenericDAO {
     //Funcionando
     //Função permite atualizar um review da tabela.
     //Function to update one review from table.
-    override fun update(obj : Any){
+    fun update(obj : Any){
         val connectionDAO = ConnectionDAO()
         try {
             val preparedStatement = connectionDAO.getPreparedStatement("""

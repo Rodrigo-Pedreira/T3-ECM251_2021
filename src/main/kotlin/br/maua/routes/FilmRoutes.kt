@@ -105,7 +105,7 @@ fun Route.filmRouting() {
             }
         }
 
-        //Delete user
+        //Delete film
         delete("/delete/{id}") {
             // se funcionar o teste da estrutura acima, aplicar aqui
 
