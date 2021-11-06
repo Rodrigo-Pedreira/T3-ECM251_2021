@@ -1,5 +1,9 @@
 package models;
 
+import kotlinx.serialization.Serializable
+
+@Serializable
+
 data class Films(
     val id : Int,
     val name : String,

@@ -2,12 +2,12 @@ package dao
 
 import models.Films
 
-class FilmDAO : GenericDAO {
+class FilmDAO {
 
     //Funcionando  -  Precisa Melhorar !!
     //Função para pegaar um filme com base no seu id.
     //Function to get one film from table by id.
-    override fun getOne(id : Int): Any {
+    fun getOne(id : Int): Films? {
         val connectionDAO = ConnectionDAO()
         var film : Films? = null        //isso aqui está ruim
         try {
@@ -33,7 +33,7 @@ class FilmDAO : GenericDAO {
     //Funcionando  -  Precisa Melhorar !!
     //Função para pegar um filme da tabela pelo nome.
     //Function to get one film from table by the name.
-    fun getOne(name : String): Any {
+    fun getOne(name : String): Films? {
         val connectionDAO = ConnectionDAO()
         var film : Films? = null        // Isso aqui está ruim
         try {
@@ -59,11 +59,11 @@ class FilmDAO : GenericDAO {
     //Funcionando
     //Função para pegar toda a tabela 'Films'.
     //Function to get all elements from Films table.
-    override fun getAll(): List<Any> {
+    fun getAll(): List<Any> {
         val connectionDAO = ConnectionDAO()
         val films = mutableListOf<Films>()
         try{
-            val resultSet = connectionDAO.executeQuery("SELECT * FROM Films;")
+            val resultSet = connectionDAO.executeQuery("SELECT * FROM films;")
             while(resultSet?.next()!!){
                 films.add(
                     Films(
@@ -88,7 +88,7 @@ class FilmDAO : GenericDAO {
     //Funcionando  -  Melhorar !
     //Função que permite adicionar um filme na tabela.
     //Function to add film in table.
-    override fun addOne(obj : Any){
+    fun addOne(obj : Any){
         val connectionDAO = ConnectionDAO()
         try {
             val preparedStatement = connectionDAO.getPreparedStatement(
@@ -117,7 +117,7 @@ class FilmDAO : GenericDAO {
     //Funcionando
     //Função que permite adicinar todos os filmes em uma lista.
     //Function to add all films in list to table.
-    override fun addAll(list : List<Any>){
+    fun addAll(list : List<Any>){
         val connectionDAO = ConnectionDAO()
         try{
             val preparedStatement = connectionDAO.getPreparedStatement("""
@@ -145,7 +145,7 @@ class FilmDAO : GenericDAO {
     //Funcionando
     //Função permite deletar um filme da tabela pelo seu id.
     //Function to delete one film from table by the id.
-    override fun delete(id : Int){
+    fun delete(id : Int){
         val connectionDAO = ConnectionDAO()
         try {
             val preparedStatement = connectionDAO.getPreparedStatement("""
@@ -167,7 +167,7 @@ class FilmDAO : GenericDAO {
     //Funcionando
     //Função permite atualizar um filme da tabela.
     //Function to update one film from table.
-    override fun update(obj : Any){
+    fun update(obj : Any){
         val connectionDAO = ConnectionDAO()
         try {
             val preparedStatement = connectionDAO.getPreparedStatement(

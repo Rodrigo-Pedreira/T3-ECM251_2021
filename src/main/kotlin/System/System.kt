@@ -1,5 +1,6 @@
 package System
 
+import br.maua.routes.registerFilmRoutes
 import dao.ReviewDAO
 import io.ktor.features.*
 import io.ktor.server.engine.*
@@ -45,6 +46,7 @@ class System {
             }
 
             registerUserRoutes()
+            registerFilmRoutes()
         }.start(wait = true)
     }
 }
