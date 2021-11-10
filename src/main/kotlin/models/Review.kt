@@ -1,6 +1,8 @@
 package models;
 
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Review (
     val id : Int,
     val idUser : Int,
@@ -8,5 +10,5 @@ data class Review (
     val review : String,
     val likes : Int,
     val score : Double,
-    val data : String,
+    val date : String,
 )

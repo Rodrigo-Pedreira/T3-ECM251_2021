@@ -5,6 +5,7 @@ import java.sql.*
 
 class ConnectionDAO {
     private val connection: Connection? = DriverManager.getConnection(SharedPath.STRING_CONNECTION_JDBC)
+//    private val connection = DriverManager.getConnection(SharedPath.STRING_CONNECTION_JDBC,SharedPath.DATABASE_USERNAME,SharedPath.DATABASE_PASSWORD)
     private var statement: Statement? = null
     private var resultSet: ResultSet? = null
     private var preparedStatement: PreparedStatement? = null
@@ -25,5 +26,8 @@ class ConnectionDAO {
         this.statement?.close()
         this.preparedStatement?.close()
         this.connection?.close()
+    }
+    fun commit(){
+        this.connection?.commit()
     }
 }

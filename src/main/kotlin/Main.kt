@@ -1,5 +1,7 @@
 import controller.MainController
 
 fun main() {
-    MainController.testDAOs(5, 5, 5)
+//    val id : Int = 7
+//    MainController.testDAOs(id,id,id)
+    MainController.runKtor()
 }

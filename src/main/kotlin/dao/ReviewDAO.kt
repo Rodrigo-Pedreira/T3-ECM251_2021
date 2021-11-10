@@ -75,7 +75,7 @@ class ReviewDAO {
                 preparedStatement?.setString(3, review.review)
                 preparedStatement?.setInt(4, review.likes)
                 preparedStatement?.setDouble(5, review.score)
-                preparedStatement?.setString(6, review.data)
+                preparedStatement?.setString(6, review.date)
                 preparedStatement?.executeUpdate()
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -102,7 +102,7 @@ class ReviewDAO {
                     preparedStatement?.setString(3, it.review)
                     preparedStatement?.setInt(4, it.likes)
                     preparedStatement?.setDouble(5, it.score)
-                    preparedStatement?.setString(6, it.data)
+                    preparedStatement?.setString(6, it.date)
                     preparedStatement?.executeUpdate()
                 }
             } catch (e: Exception) {
@@ -129,7 +129,7 @@ class ReviewDAO {
                 preparedStatement?.setString(3, review.review)
                 preparedStatement?.setInt(4, review.likes)
                 preparedStatement?.setDouble(5, review.score)
-                preparedStatement?.setString(6, review.data)
+                preparedStatement?.setString(6, review.date)
                 preparedStatement?.setInt(7, review.id)
                 preparedStatement?.executeUpdate()
             } catch (e: Exception) {
