@@ -5,6 +5,7 @@ import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.serialization.*
 import io.ktor.application.*
+import io.ktor.http.*
 import testdrivers.FilmDAOTestDrive
 import testdrivers.ReviewDAOTestDrive
 import testdrivers.UserDAOTestDrive
@@ -27,6 +28,24 @@ class MainController {
 
         fun runKtor(){
             embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
+
+                // https://ktor.io/docs/cors.html
+                install(CORS) {
+                    anyHost()   // Precisa disso!!
+
+                    method(HttpMethod.Delete)
+//                    method(HttpMethod.Options)
+//                    method(HttpMethod.Put)
+//                    method(HttpMethod.Patch)
+
+//                    header(HttpHeaders.Authorization)
+//                    header(HttpHeaders.AccessControlAllowOrigin)
+//                    header(HttpHeaders.ContentType)
+
+//                    allowCredentials = true
+//                    allowNonSimpleContentTypes = true
+//                    allowSameOrigin = true
+                }
 
                 install(ContentNegotiation) {
                     json()
