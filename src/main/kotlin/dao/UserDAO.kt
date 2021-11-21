@@ -52,6 +52,7 @@ class UserDAO {
         }
 
         override fun insert(obj: Any) {
+
             var connection: ConnectionDAO? = null
             try {
                 connection = ConnectionDAO()
@@ -64,7 +65,12 @@ class UserDAO {
                 )
                 val user = obj as User
                 preparedStatement?.setString(1, user.name)
-                preparedStatement?.setString(2, user.password)
+                //senha tem que usar hash
+                //original:
+                //preparedStatement?.setString(2, user.password)
+                //val passHas = user.password.hashCode()
+                preparedStatement?.setString(2,"${user.password.hashCode()}")
+                //fim
                 preparedStatement?.setString(3, user.email)
                 preparedStatement?.executeUpdate()
             } catch (e: Exception) {
@@ -88,7 +94,7 @@ class UserDAO {
                 val user = list as List<User>
                 user.forEach {
                     preparedStatement?.setString(1, it.name)
-                    preparedStatement?.setString(2, it.password)
+                    preparedStatement?.setString(2, "${it.password.hashCode()}")
                     preparedStatement?.setString(3, it.email)
                     preparedStatement?.executeUpdate()
                 }
@@ -112,7 +118,7 @@ class UserDAO {
                 )
                 val user = obj as User
                 preparedStatement?.setString(1, user.name)
-                preparedStatement?.setString(2, user.password)
+                preparedStatement?.setString(2, "${user.password.hashCode()}")
                 preparedStatement?.setString(3, user.email)
                 preparedStatement?.setInt(4, user.id)
                 preparedStatement?.executeUpdate()
