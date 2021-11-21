@@ -30,4 +30,9 @@ class ConnectionDAO {
     fun commit(){
         this.connection?.commit()
     }
+
+    //Se não estiver/ter auto-commit, usar esta função.
+    fun commit(){
+        this.connection?.commit()
+    }
 }
