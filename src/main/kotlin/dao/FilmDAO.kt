@@ -6,24 +6,27 @@ class FilmDAO {
     companion object : GenericDAOInterface {
 
         override fun select(id: Int): Film {
-            val film: Film?
+            var film: Film? = null
             var connection: ConnectionDAO? = null
             try {
                 connection = ConnectionDAO()
                 val resultSet = connection.executeQuery("SELECT * FROM Films WHERE id = ${id};")
-                film = Film(
-                    resultSet!!.getInt("id"),
-                    resultSet.getString("name"),
-                    resultSet.getString("genre"),
-                    resultSet.getString("director"),
-                    resultSet.getString("date"),
-                )
+                while (resultSet?.next()!!) {
+                    film = Film(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("genre"),
+                        resultSet.getString("director"),
+                        resultSet.getString("date"),
+                    )
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
                 return Film(-1, "ERROR", "ERROR", "ERROR", "ERROR")
             } finally {
                 connection?.close()
             }
+            //return film ?: Film(-1, "ERROR", "ERROR", "ERROR", "ERROR")
             return film!!
         }
 

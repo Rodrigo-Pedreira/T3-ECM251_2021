@@ -27,9 +27,6 @@ class ConnectionDAO {
         this.preparedStatement?.close()
         this.connection?.close()
     }
-    fun commit(){
-        this.connection?.commit()
-    }
 
     //Se não estiver/ter auto-commit, usar esta função.
     fun commit(){

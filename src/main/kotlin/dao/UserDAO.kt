@@ -1,28 +1,33 @@
 package dao
 
 import models.User
+import security.Hash
 
 class UserDAO {
     companion object : GenericDAOInterface {
 
         override fun select(id: Int): User {
-            val user: User?
+            var user: User? = null
             var connection: ConnectionDAO? = null
             try {
                 connection = ConnectionDAO()
-                val resultSet = connection.executeQuery("SELECT * FROM Users WHERE id == ${id};")
-                user = User(
-                    resultSet!!.getInt("id"),
-                    resultSet.getString("name"),
-                    resultSet.getString("password"),
-                    resultSet.getString("email"),
-                )
+                val resultSet = connection.executeQuery("SELECT * FROM Users WHERE id = ${id};")
+
+                while(resultSet?.next()!!){
+                    user = User(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("password"),
+                        resultSet.getString("email"))
+                }
+
             } catch (e: Exception) {
                 e.printStackTrace()
                 return User(-1, "ERROR", "ERROR", "ERROR")
             } finally {
                 connection?.close()
             }
+            //return return user ?: User(-1, "ERROR", "ERROR", "ERROR")
             return user!!
         }
 
@@ -65,12 +70,10 @@ class UserDAO {
                 )
                 val user = obj as User
                 preparedStatement?.setString(1, user.name)
-                //senha tem que usar hash
-                //original:
+                //caso senha venha sem hash:
+                preparedStatement?.setString(2, Hash.md5(user.password))
+                //caso senha venha com hash:
                 //preparedStatement?.setString(2, user.password)
-                //val passHas = user.password.hashCode()
-                preparedStatement?.setString(2,"${user.password.hashCode()}")
-                //fim
                 preparedStatement?.setString(3, user.email)
                 preparedStatement?.executeUpdate()
             } catch (e: Exception) {
@@ -94,7 +97,10 @@ class UserDAO {
                 val user = list as List<User>
                 user.forEach {
                     preparedStatement?.setString(1, it.name)
-                    preparedStatement?.setString(2, "${it.password.hashCode()}")
+                    //caso senha venha sem hash:
+                    preparedStatement?.setString(2, Hash.md5(it.password))
+                    //caso senha venha com hash:
+                    //preparedStatement?.setString(2, user.password)
                     preparedStatement?.setString(3, it.email)
                     preparedStatement?.executeUpdate()
                 }
@@ -113,12 +119,15 @@ class UserDAO {
                     """
                         UPDATE Users
                             SET name = ?, password = ?, email = ?
-                            WHERE id =?;
+                            WHERE id = ?;
                     """.trimMargin()
                 )
                 val user = obj as User
                 preparedStatement?.setString(1, user.name)
-                preparedStatement?.setString(2, "${user.password.hashCode()}")
+                //caso senha venha sem hash:
+                preparedStatement?.setString(2, Hash.md5(user.password))
+                //caso senha venha com hash:
+                //preparedStatement?.setString(2, user.password)
                 preparedStatement?.setString(3, user.email)
                 preparedStatement?.setInt(4, user.id)
                 preparedStatement?.executeUpdate()
@@ -136,7 +145,7 @@ class UserDAO {
                 val preparedStatement = connection.getPreparedStatement(
                     """
                         DELETE FROM Users
-                            WHERE id =?;
+                            WHERE id = ?;
                     """.trimMargin()
                 )
                 preparedStatement?.setInt(1, id)

@@ -7,26 +7,29 @@ class ReviewDAO {
     companion object : GenericDAOInterface {
 
         override fun select(id: Int): Review {
-            val reviews: Review?
+            var reviews: Review? = null
             var connection: ConnectionDAO? = null
             try {
                 connection = ConnectionDAO()
-                val resultSet = connection.executeQuery("SELECT * FROM reviews WHERE id == ${id};")
-                reviews = Review(
-                    resultSet!!.getInt("id"),
-                    resultSet.getInt("idUser"),
-                    resultSet.getInt("idFilm"),
-                    resultSet.getString("review"),
-                    resultSet.getInt("likes"),
-                    resultSet.getDouble("score"),
-                    resultSet.getString("data"),
-                )
+                val resultSet = connection.executeQuery("SELECT * FROM reviews WHERE id = ${id};")
+                while (resultSet?.next()!!) {
+                    reviews = Review(
+                        resultSet.getInt("id"),
+                        resultSet.getInt("idUser"),
+                        resultSet.getInt("idFilm"),
+                        resultSet.getString("review"),
+                        resultSet.getInt("likes"),
+                        resultSet.getDouble("score"),
+                        resultSet.getString("date"),
+                    )
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
                 return Review(-1, -1, -1, "ERROR", -1, -1.0, "ERROR")
             } finally {
                 connection?.close()
             }
+            //return reviews ?: Review(-1, -1, -1, "ERROR", -1, -1.0, "ERROR")
             return reviews!!
         }
 
@@ -45,7 +48,7 @@ class ReviewDAO {
                             resultSet.getString("review"),
                             resultSet.getInt("likes"),
                             resultSet.getDouble("score"),
-                            resultSet.getString("data"),
+                            resultSet.getString("date"),
                         )
                     )
                 }
@@ -65,8 +68,8 @@ class ReviewDAO {
                 val preparedStatement = connection.getPreparedStatement(
                     """
                     INSERT INTO reviews
-                        (idUser, idFilm, review  ,  likes, score, data)
-                        VALUES (?,?,? , ?,?,?);
+                        (idUser, idFilm, review, likes, score, date)
+                        VALUES (?,?,?,?,?,?);
                     """.trimMargin()
                 )
                 val review = obj as Review
@@ -91,8 +94,8 @@ class ReviewDAO {
                 val preparedStatement = connection.getPreparedStatement(
                     """
                     INSERT INTO reviews
-                        (idUser, idFilm, review  ,  likes, score, data)
-                        VALUES (?,?,? , ?,?,?);
+                        (idUser, idFilm, review, likes, score, date)
+                        VALUES (?,?,?,?,?,?);
                     """.trimMargin()
                 )
                 val review = list as List<Review>
@@ -119,8 +122,8 @@ class ReviewDAO {
                 val preparedStatement = connection.getPreparedStatement(
                     """
                     UPDATE reviews
-                        SET idUser =?, idFilm =?, review =?  ,  likes =?, score =?, data =?
-                        WHERE id =?;
+                        SET idUser = ?, idFilm = ?, review = ?, likes = ?, score = ?, date = ?
+                        WHERE id = ?;
                     """.trimMargin()
                 )
                 val review = obj as Review
@@ -146,7 +149,7 @@ class ReviewDAO {
                 val preparedStatement = connection.getPreparedStatement(
                     """
                     DELETE FROM reviews
-                        WHERE id =?;
+                        WHERE id = ?;
                     """.trimMargin()
                 )
                 preparedStatement?.setInt(1, id)
