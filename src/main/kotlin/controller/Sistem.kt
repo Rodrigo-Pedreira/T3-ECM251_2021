@@ -1,7 +1,9 @@
 package controller
 
 class Sistem {
-    fun run(){
-        println("Vai dar bom.")
+    companion object {
+        fun run() {
+            println("Vai dar bom.")
+        }
     }
 }
