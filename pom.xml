@@ -128,5 +128,13 @@
             <version>${ktor_version}</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- https://ktor.io/docs/digest.html#add_dependencies -->
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-auth</artifactId>
+            <version>${ktor_version}</version>
+        </dependency>
+
     </dependencies>
 </project>
