@@ -11,6 +11,16 @@ import io.ktor.server.netty.*
 import java.security.MessageDigest
 import kotlin.text.Charsets.UTF_8
 
+
+// Ajuda no flutter? : https://www.digitalocean.com/community/tutorials/flutter-flutter-http
+
+//      como mandar body, mudar Authorization header (Auth no postman) ?
+//          - https://docs.flutter.dev/cookbook/networking/authenticated-requests +
+//          - https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization ?
+
+// extra flutter:   -https://pub.dev/documentation/http/latest/
+
+
 // IMPORTANTE PARA ENTENDER  --->  https://ktor.io/docs/digest.html#flow
 
 class TestKtorAuth {
