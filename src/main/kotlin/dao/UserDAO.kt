@@ -10,7 +10,8 @@ class UserDAO {
             var connection: ConnectionDAO? = null
             try {
                 connection = ConnectionDAO()
-                val resultSet = connection.executeQuery("SELECT * FROM Users WHERE id == ${id};")
+                val resultSet = connection.executeQuery("SELECT * FROM Users WHERE id = ${id};")
+                resultSet?.first()
                 user = User(
                     resultSet!!.getInt("id"),
                     resultSet.getString("name"),
@@ -18,7 +19,11 @@ class UserDAO {
                     resultSet.getString("email"),
                 )
             } catch (e: Exception) {
-                e.printStackTrace()
+                if (e.message == "Current position is after the last row" || e.message == "Current position is before the first row") {
+                    System.err.println("Error: There is likely no entry with id = $id in table Users.")
+                }
+                    e.printStackTrace()
+
                 return User(-1, "ERROR", "ERROR", "ERROR")
             } finally {
                 connection?.close()

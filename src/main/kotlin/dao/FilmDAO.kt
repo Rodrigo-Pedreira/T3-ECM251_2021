@@ -11,6 +11,7 @@ class FilmDAO {
             try {
                 connection = ConnectionDAO()
                 val resultSet = connection.executeQuery("SELECT * FROM Films WHERE id = ${id};")
+                resultSet?.first()
                 film = Film(
                     resultSet!!.getInt("id"),
                     resultSet.getString("name"),
@@ -19,7 +20,11 @@ class FilmDAO {
                     resultSet.getString("date"),
                 )
             } catch (e: Exception) {
-                e.printStackTrace()
+                if (e.message == "Current position is after the last row" || e.message == "Current position is before the first row") {
+                    System.err.println("Error: There is likely no entry with id = $id in table Films.")
+                }
+                    e.printStackTrace()
+
                 return Film(-1, "ERROR", "ERROR", "ERROR", "ERROR")
             } finally {
                 connection?.close()

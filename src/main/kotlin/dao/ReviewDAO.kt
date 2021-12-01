@@ -1,5 +1,6 @@
 package dao
 
+import io.ktor.util.*
 import models.Review
 
 //TODO:JavaDocs
@@ -11,7 +12,8 @@ class ReviewDAO {
             var connection: ConnectionDAO? = null
             try {
                 connection = ConnectionDAO()
-                val resultSet = connection.executeQuery("SELECT * FROM reviews WHERE id == ${id};")
+                val resultSet = connection.executeQuery("SELECT * FROM reviews WHERE id = ${id};")
+                resultSet?.first()
                 reviews = Review(
                     resultSet!!.getInt("id"),
                     resultSet.getInt("idUser"),
@@ -22,7 +24,11 @@ class ReviewDAO {
                     resultSet.getString("data"),
                 )
             } catch (e: Exception) {
+                if (e.message == "Current position is after the last row" || e.message == "Current position is before the first row") {
+                    System.err.println("Error: There is likely no entry with id = $id in table reviews.")
+                }
                 e.printStackTrace()
+
                 return Review(-1, -1, -1, "ERROR", -1, -1.0, "ERROR")
             } finally {
                 connection?.close()
